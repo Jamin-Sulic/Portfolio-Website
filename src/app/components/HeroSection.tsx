@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ThemeSwitch from "./ThemeSwitch";
 
 export default function HeroSection() {
   return (
@@ -10,6 +11,7 @@ export default function HeroSection() {
                  dark:bg-[#0B0C10] dark:text-gray-100
                  transition-colors duration-500 ease-in-out"
     >
+      <ThemeSwitch />
       <motion.h1
         className="text-5xl md:text-6xl font-bold mb-4 
                    text-gray-900 dark:text-white transition-colors duration-500"
