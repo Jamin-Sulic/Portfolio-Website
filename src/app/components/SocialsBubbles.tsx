@@ -1,0 +1,120 @@
+"use client";
+
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { Github, Linkedin, Mail, FileText } from "lucide-react"; // npm install lucide-react
+
+export default function SocialBubbles() {
+  const [showCV, setShowCV] = useState(false);
+
+  const iconVariants = {
+    initial: { scale: 1, boxShadow: "none" },
+    hover: (shadow: string) => ({
+      scale: 1.15,
+      boxShadow: shadow,
+      transition: { duration: 0.1, ease: "linear" },
+    }),
+    exit: {
+      scale: 1,
+      boxShadow: "none",
+      transition: { duration: 0.1, ease: "linear" },
+    },
+  };
+
+  const icons = [
+    {
+      name: "GitHub",
+      icon: <Github size={22} />,
+      link: "https://github.com/Jamin-Sulic",
+      bg: "from-gray-800 to-gray-700",
+      shadow: "0 0 25px rgba(255,255,255,0.2)",
+    },
+    {
+      name: "LinkedIn",
+      icon: <Linkedin size={22} />,
+      link: "https://www.linkedin.com/in/jamin-sulic-45226a363/",
+      bg: "from-blue-600 to-blue-500",
+      shadow: "0 0 25px rgba(59,130,246,0.6)",
+    },
+    {
+      name: "Email",
+      icon: <Mail size={22} />,
+      link: "mailto:sulic.jamin@gmail.com",
+      bg: "from-red-500 to-red-400",
+      shadow: "0 0 25px rgba(239,68,68,0.6)",
+    },
+  ];
+
+  return (
+    <>
+      {/* Floating Icons Container */}
+      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50 will-change-transform">
+        {icons.map((item, i) => (
+          <motion.a
+            key={item.name}
+            href={item.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`w-12 h-12 rounded-full bg-gradient-to-br ${item.bg} flex items-center justify-center text-white shadow-lg cursor-pointer`}
+            custom={item.shadow}
+            variants={iconVariants}
+            initial="initial"
+            whileHover="hover"
+            animate="exit"
+            whileTap={{ scale: 0.95 }}
+          >
+            {item.icon}
+          </motion.a>
+        ))}
+
+        {/* CV Button */}
+        <motion.button
+          onClick={() => setShowCV(true)}
+          className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-400 flex items-center justify-center text-white shadow-lg cursor-pointer"
+          custom={"0 0 25px rgba(34,197,94,0.6)"}
+          variants={iconVariants}
+          initial="initial"
+          whileHover="hover"
+          animate="exit"
+          whileTap={{ scale: 0.95 }}
+        >
+          <FileText size={22} />
+        </motion.button>
+      </div>
+
+      {/* CV Popup */}
+      <AnimatePresence>
+        {showCV && (
+          <motion.div
+            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="relative bg-white dark:bg-[#111] rounded-xl shadow-2xl w-[90%] max-w-4xl h-[80vh] overflow-hidden"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            >
+              <button
+                onClick={() => setShowCV(false)}
+                className="absolute top-4 right-4 text-gray-600 dark:text-gray-300 hover:text-red-500"
+              >
+                ✕
+              </button>
+
+              {/* PDF Viewer */}
+              <iframe
+                src="/CV.pdf"
+                className="w-full h-full"
+                title="Jamin Sulic CV"
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}

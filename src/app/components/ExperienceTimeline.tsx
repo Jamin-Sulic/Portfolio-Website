@@ -7,7 +7,7 @@ import { useState } from "react";
 const experiences = [
   {
     period: "Jun 2025 – Sep 2025",
-    title: "Julius Baer",
+    title: "Julius Bär",
     role: "Robotic Process Automation Developer Intern",
     description:
       "Automated banking processes with UiPath and developed reusable RPA libraries. Built bots for trade automation, login flows, and process migration.",
@@ -89,91 +89,93 @@ function TimelineItem({ exp }: { exp: any }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div
-      ref={ref}
-      className="relative mb-24 flex items-center"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <AnimatePresence>
-        {inView && (
-          <>
-            {/* Left side: logo + timeline line */}
-            <div className="relative flex flex-col items-center">
+    <>
+      <div
+        ref={ref}
+        className="relative mb-24 flex items-center"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <AnimatePresence>
+          {inView && (
+            <>
+              {/* Left side: logo + timeline line */}
+              <div className="relative flex flex-col items-center">
 
-              {/* Logo Circle */}
-              <motion.div
-                className="relative flex flex-col items-center -ml-9.5"                
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 1 }}
-                transition={{ duration: 1.5, type: "spring" }}
-                
-              >
-                {/* Holo Ring */}
+                {/* Logo Circle */}
                 <motion.div
-                  className="absolute inset-0 rounded-full pointer-events-none"
-                  animate={{
-                    opacity: hovered ? 1 : 0,
-                    scale: hovered ? 1.15 : 0.8,
-                  }}
-                  transition={{ duration: 0.4, ease: easeInOut } as Transition}
-                  style={{
-                    background:
-                      "conic-gradient(from 0deg, #60a5fa, #a78bfa, #ec4899, #f59e0b, #60a5fa)",
-                    width: "80px",
-                    height: "80px",
-                    filter: "blur(6px)",
-                    zIndex: 0,
-                  }}
-                />
-
-                {/* Logo */}
-                <motion.div
-                  className={`relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden
-                             border-4 border-white dark:border-gray-900 shadow-xl z-10
-                             ${exp.bgColor}`}
-                  animate={{
-                    scale: hovered ? 1.1 : 1,
-                    boxShadow: hovered
-                      ? "0 0 25px rgba(96,165,250,0.4)"
-                      : "0 8px 15px rgba(0,0,0,0.2)",
-                  }}
-                  transition={{ duration: 0.3 }}
+                  className="relative flex flex-col items-center -ml-9.5"                
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 1 }}
+                  transition={{ duration: 1.5, type: "spring" }}
+                  
                 >
-                  <img
-                    src={exp.logo}
-                    alt={exp.title}
-                    className={`w-full h-full object-contain p-0 scale-105 ${
-                      (exp as any).logoClass ?? ""
-                    }`}
+                  {/* Holo Ring */}
+                  <motion.div
+                    className="absolute inset-0 rounded-full pointer-events-none"
+                    animate={{
+                      opacity: hovered ? 1 : 0,
+                      scale: hovered ? 1.15 : 0.8,
+                    }}
+                    transition={{ duration: 0.4, ease: easeInOut } as Transition}
+                    style={{
+                      background:
+                        "conic-gradient(from 0deg, #60a5fa, #a78bfa, #ec4899, #f59e0b, #60a5fa)",
+                      width: "80px",
+                      height: "80px",
+                      filter: "blur(6px)",
+                      zIndex: 0,
+                    }}
                   />
-                </motion.div>
-              </motion.div>
-            </div>
 
-            {/* Right side: text card */}
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              animate={inView ? (hovered ? "hover" : "rest") : "hidden"}
-              className="ml-10 flex-1 bg-white dark:bg-[#0B0C10] rounded-lg p-6 border-2 border-solid"
-            >
-              <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
-                {exp.title}
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">
-                {exp.role}
-              </p>
-              <p className="text-sm italic text-gray-400 dark:text-gray-500 mt-1">
-                {exp.period}
-              </p>
-              <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
-                {exp.description}
-              </p>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </div>
+                  {/* Logo */}
+                  <motion.div
+                    className={`relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden
+                               border-4 border-white dark:border-gray-900 shadow-xl z-10
+                               ${exp.bgColor}`}
+                    animate={{
+                      scale: hovered ? 1.1 : 1,
+                      boxShadow: hovered
+                        ? "0 0 25px rgba(96,165,250,0.4)"
+                        : "0 8px 15px rgba(0,0,0,0.2)",
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <img
+                      src={exp.logo}
+                      alt={exp.title}
+                      className={`w-full h-full object-contain p-0 scale-105 ${
+                        (exp as any).logoClass ?? ""
+                      }`}
+                    />
+                  </motion.div>
+                </motion.div>
+              </div>
+
+              {/* Right side: text card */}
+              <motion.div
+                variants={cardVariants}
+                initial="hidden"
+                animate={inView ? (hovered ? "hover" : "rest") : "hidden"}
+                className="ml-10 flex-1 bg-white dark:bg-[#0B0C10] rounded-lg p-6 border-2 border-solid"
+              >
+                <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+                  {exp.title}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">
+                  {exp.role}
+                </p>
+                <p className="text-sm italic text-gray-400 dark:text-gray-500 mt-1">
+                  {exp.period}
+                </p>
+                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+                  {exp.description}
+                </p>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
   );
 }

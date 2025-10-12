@@ -1,79 +1,161 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 
-const techStack = [
-  { name: "Python", icon: "/icons/python.svg" },
-  { name: "JavaScript", icon: "/icons/javascript.svg" },
-  { name: "TypeScript", icon: "/icons/typescript.svg" },
-  { name: "React", icon: "/icons/react.svg" },
-  { name: "Next.js", icon: "/icons/nextjs.svg" },
-  { name: "Tailwind", icon: "/icons/tailwind.svg" },
-  { name: "Node.js", icon: "/icons/nodejs.svg" },
-  { name: "SQL", icon: "/icons/sql.svg" },
-  { name: "Git", icon: "/icons/git.svg" },
-  { name: "UiPath", icon: "/icons/uipath.svg" },
-];
+export default function TechBubblesSection() {
+  const [open, setOpen] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
 
-// Loop-Effekt durch Duplizieren
-const repeatedStack = [...techStack, ...techStack, ...techStack];
+  const techs = [
+    "React",
+    "Next.js",
+    "Tailwind CSS",
+    "TypeScript",
+    "JavaScript",
+    "Python",
+    "C++",
+    "SQL",
+    "Java",
+    "VB.NET",
+    "UiPath",
+    "Spring Boot",
+    "NumPy",
+    "Node.js",
+    "Regex",
+    "HTML",
+    "CSS",
+    "Workflows",
+    "Git",
+    "Google Cloud",
+  ];
 
-export default function TechStackSection() {
   return (
     <section
-      id="techstack"
-      className="relative py-24 px-6 overflow-hidden bg-[#0B0C10] text-gray-100"
+      id="techbubbles"
+      className="relative flex flex-col items-center justify-center py-32 bg-[#0B0C10] text-white overflow-hidden"
+      onClick={() => open && setOpen(false)}
     >
-      <h2 className="text-3xl font-bold mb-16 text-center text-blue-400">
-        Tech Stack
-      </h2>
+      {/* Pop-Me-Balloon */}
+      <AnimatePresence mode="wait">
+        {!open && (
+          <motion.div
+            key="balloon"
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(true);
+            }}
+            className="flex items-center justify-center w-44 h-44 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 shadow-2xl cursor-pointer select-none"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{
+              scale: [1, 1.2, 0.8, 1.4, 0],
+              opacity: [1, 1, 1, 0.6, 0],
+              rotate: [0, -10, 8, 0],
+              transition: { duration: 0.8, ease: "easeInOut" },
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <span className="text-xl font-semibold">POP ME!</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      <div className="relative w-full overflow-hidden">
-        <motion.div
-          className="flex gap-14"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            ease: "linear",
-            duration: 30,
-          }}
-        >
-          {repeatedStack.map((tech, index) => (
-            <motion.div
-              key={index}
-              whileHover={{
-                scale: 1.1,
-                rotateY: 10,
-                rotateX: -5,
-                boxShadow: "0 0 20px rgba(59,130,246,0.6)",
-              }}
-              transition={{ type: "spring", stiffness: 200, damping: 10 }}
-              className="flex flex-col items-center justify-center flex-shrink-0 w-28"
-            >
-              <div className="relative w-16 h-16 flex items-center justify-center bg-[#10141A] rounded-2xl border border-blue-600/30 shadow-md">
-                <Image
-                  src={tech.icon}
-                  alt={tech.name}
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
-              <p className="mt-3 text-sm font-medium text-blue-300">
-                {tech.name}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
+      {/* Title erscheint nach dem Pop */}
+      <AnimatePresence>
+        {open && (
+          <motion.h2
+            key="title"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.6, duration: 0.6, type: "spring" }}
+            className="absolute text-3xl font-bold text-blue-400"
+          >
+            My Tech Universe
+          </motion.h2>
+        )}
+      </AnimatePresence>
 
-        {/* Glow-Balken unten */}
-        <div className="absolute bottom-0 left-0 w-full h-[4px] bg-gradient-to-r from-transparent via-blue-500 to-transparent animate-pulse blur-sm opacity-60" />
-      </div>
+      {/* Orbit-Bubbles */}
+      <AnimatePresence>
+        {open && (
+          <div
+            key="orbit"
+            className="absolute top-1/2 left-1/2 w-[620px] h-[620px] -translate-x-1/2 -translate-y-1/2"
+          >
+            {techs.map((tech, i) => {
+              const radius = 240; // Abstand
+              const angle = (i / techs.length) * 2 * Math.PI;
+              const x = Math.cos(angle) * radius;
+              const y = Math.sin(angle) * radius;
 
-      {/* weiches Fade oben/unten */}
-      <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-[#0B0C10] to-transparent pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-[#0B0C10] to-transparent pointer-events-none" />
+              // Wenn gehovt → kommt in die Mitte
+              const active = hovered === tech;
+
+              return (
+                <motion.div
+                  key={tech}
+                  onMouseEnter={() => setHovered(tech)}
+                  onMouseLeave={() => setHovered(null)}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{
+                    opacity: 1,
+                    scale: active ? 1.4 : 1,
+                    x: active ? 0 : x,
+                    y: active ? 0 : y,
+                    zIndex: active ? 50 : 1,
+                  }}
+                  exit={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 120,
+                    damping: 14,
+                    delay: i * 0.02,
+                  }}
+                  className={`absolute top-1/2 left-1/2 w-24 h-24 flex items-center justify-center rounded-full text-xs font-medium select-none
+                    ${active
+                      ? "bg-gradient-to-br from-blue-500 to-blue-300 shadow-blue-400/60 shadow-xl"
+                      : "bg-gradient-to-br from-blue-800 to-blue-500 shadow-md"
+                    }`}
+                >
+                  <motion.span
+                    animate={{
+                      y: [0, -6, 0, 4, 0],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: 6 + Math.random() * 3,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    {tech}
+                  </motion.span>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Untertitel für gehovte Bubble */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            key="hoverlabel"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.3 }}
+            className="absolute bottom-20 text-lg font-medium text-blue-300"
+          >
+            {hovered}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hintergrund-Glow */}
+      <div className="absolute inset-0 -z-10 blur-3xl bg-gradient-to-t from-blue-300/10 via-transparent to-blue-600/10" />
     </section>
   );
 }
