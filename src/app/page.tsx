@@ -7,6 +7,7 @@ import ThemeSwitch from "./components/ThemeSwitch";
 import ExperienceTimeline from "./components/ExperienceTimeline";
 import TechStackSection from "./components/TechStackSection";
 import SocialBubbles from "./components/SocialsBubbles";
+import ProjectsSection from "./components/ProjectSection";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -27,6 +28,7 @@ export default function Home() {
           <SocialBubbles/>
           <ExperienceTimeline />
           <TechStackSection />
+          <ProjectsSection />
         </>
       )}
 
