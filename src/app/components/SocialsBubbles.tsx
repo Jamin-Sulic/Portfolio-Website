@@ -2,23 +2,19 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Github, Linkedin, Mail, FileText } from "lucide-react"; // npm install lucide-react
+import { Github, Linkedin, Mail, FileText } from "lucide-react";
 
 export default function SocialBubbles() {
   const [showCV, setShowCV] = useState(false);
 
-  const iconVariants = {
+  // 👇 TypeScript nicht meckern lassen
+  const iconVariants: any = {
     initial: { scale: 1, boxShadow: "none" },
     hover: (shadow: string) => ({
       scale: 1.15,
       boxShadow: shadow,
-      transition: { duration: 0.1, ease: "linear" },
+      transition: { duration: 0.1, ease: [0.4, 0, 0.2, 1] },
     }),
-    exit: {
-      scale: 1,
-      boxShadow: "none",
-      transition: { duration: 0.1, ease: "linear" },
-    },
   };
 
   const icons = [
@@ -47,7 +43,6 @@ export default function SocialBubbles() {
 
   return (
     <>
-      {/* Floating Icons Container */}
       <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50 will-change-transform">
         {icons.map((item, i) => (
           <motion.a
@@ -60,8 +55,8 @@ export default function SocialBubbles() {
             variants={iconVariants}
             initial="initial"
             whileHover="hover"
-            animate="exit"
             whileTap={{ scale: 0.95 }}
+            animate="initial"
           >
             {item.icon}
           </motion.a>
@@ -75,14 +70,13 @@ export default function SocialBubbles() {
           variants={iconVariants}
           initial="initial"
           whileHover="hover"
-          animate="exit"
           whileTap={{ scale: 0.95 }}
+          animate="initial"
         >
           <FileText size={22} />
         </motion.button>
       </div>
 
-      {/* CV Popup */}
       <AnimatePresence>
         {showCV && (
           <motion.div
@@ -105,7 +99,6 @@ export default function SocialBubbles() {
                 ✕
               </button>
 
-              {/* PDF Viewer */}
               <iframe
                 src="/CV.pdf"
                 className="w-full h-full"
