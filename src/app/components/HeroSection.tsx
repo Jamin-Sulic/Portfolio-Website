@@ -74,13 +74,19 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
       >
-        <a
-          href="#projects"
+        <button
+          onClick={() => {
+            const projectsSection = document.getElementById("projects");
+            if (projectsSection) {
+              projectsSection.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
           className="px-6 py-3 rounded-lg font-medium transition
-                     bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                    bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
         >
           View Projects
-        </a>
+        </button>
+
         <button
           onClick={() => setShowPopup(true)}
           className="px-6 py-3 rounded-lg font-medium border border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-500 hover:text-white transition"
@@ -88,6 +94,7 @@ export default function HeroSection() {
           Contact Me
         </button>
       </motion.div>
+
 
       {/* Popup */}
       <AnimatePresence>

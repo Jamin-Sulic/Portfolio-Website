@@ -1,6 +1,6 @@
 "use client";
 
-import { Variants, Transition, motion, AnimatePresence } from "framer-motion";
+import { Variants, Transition, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
 
@@ -31,7 +31,7 @@ const experiences = [
     description:
       "Graduated with a focus on mathematics and applied sciences.",
     logo: "/KSL.png",
-    bgColor: "bg-white dark:bg-gray-800"
+    bgColor: "bg-white dark:bg-gray-800",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function ExperienceTimeline() {
   return (
     <section
       id="experience"
-      className="relative max-w-4xl mx-auto py-24 px-6 text-gray-900 dark:text-gray-100"
+      className="relative max-w-4xl mx-auto py-24 px-6 text-gray-900 dark:text-gray-100 scroll-smooth"
     >
       <h2 className="text-3xl font-bold mb-20 text-center">
         Experience & Education
@@ -57,125 +57,125 @@ export default function ExperienceTimeline() {
   );
 }
 
-// Reusable variants for smooth pulsing hover animation
-import { easeInOut } from "framer-motion";
+// --- Animation Variants ---
 const cardVariants: Variants = {
   hidden: {
     scale: 0.95,
     opacity: 0,
     borderColor: "#ffffff",
     boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-    transition: { duration: 0.45, ease: easeInOut } as Transition,
+    transition: { duration: 0.45, ease: "easeInOut" } as Transition,
   },
   rest: {
     scale: 1,
     opacity: 1,
     borderColor: "#ffffff",
     boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-    transition: { duration: 0.4, ease: easeInOut } as Transition,
+    transition: { duration: 0.4, ease: "easeInOut" } as Transition,
   },
   hover: {
     borderColor: "#60a5fa",
-    // Keep visible and reset any scale/opacity from the hidden state
     scale: 1,
     opacity: 1,
     boxShadow: "0 12px 30px rgba(96,165,250,0.18)",
-    transition: { duration: 0.35, ease: easeInOut } as Transition,
+    transition: { duration: 0.35, ease: "easeInOut" } as Transition,
   },
 };
 
+// --- TimelineItem Component ---
 function TimelineItem({ exp }: { exp: any }) {
-  const { ref, inView } = useInView({ triggerOnce: false, threshold: 0.3 });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
   const [hovered, setHovered] = useState(false);
 
   return (
-    <>
-      <div
-        ref={ref}
-        className="relative mb-24 flex items-center"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        <AnimatePresence>
-          {inView && (
-            <>
-              {/* Left side: logo + timeline line */}
-              <div className="relative flex flex-col items-center">
-
-                {/* Logo Circle */}
-                <motion.div
-                  className="relative flex flex-col items-center -ml-9.5"                
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 1 }}
-                  transition={{ duration: 1.5, type: "spring" }}
-                  
-                >
-                  {/* Holo Ring */}
-                  <motion.div
-                    className="absolute inset-0 rounded-full pointer-events-none"
-                    animate={{
-                      opacity: hovered ? 1 : 0,
-                      scale: hovered ? 1.15 : 0.8,
-                    }}
-                    transition={{ duration: 0.4, ease: easeInOut } as Transition}
-                    style={{
-                      background:
-                        "conic-gradient(from 0deg, #60a5fa, #a78bfa, #ec4899, #f59e0b, #60a5fa)",
-                      width: "80px",
-                      height: "80px",
-                      filter: "blur(6px)",
-                      zIndex: 0,
-                    }}
-                  />
-
-                  {/* Logo */}
-                  <motion.div
-                    className={`relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden
-                               border-4 border-white dark:border-gray-900 shadow-xl z-10
-                               ${exp.bgColor}`}
-                    animate={{
-                      scale: hovered ? 1.1 : 1,
-                      boxShadow: hovered
-                        ? "0 0 25px rgba(96,165,250,0.4)"
-                        : "0 8px 15px rgba(0,0,0,0.2)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <img
-                      src={exp.logo}
-                      alt={exp.title}
-                      className={`w-full h-full object-contain p-0 scale-105 ${
-                        (exp as any).logoClass ?? ""
-                      }`}
-                    />
-                  </motion.div>
-                </motion.div>
-              </div>
-
-              {/* Right side: text card */}
+    <div
+      ref={ref}
+      className="relative mb-24 flex items-center will-change-transform transform-gpu"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {inView && (
+        <>
+          {/* Left side: Logo & Timeline Circle */}
+          <div className="relative flex flex-col items-center">
+            <motion.div
+              className="relative flex flex-col items-center -ml-9.5"
+              initial={{ scale: 0, rotate: -180 }}
+              whileInView={{ scale: 1, rotate: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, type: "spring" }}
+            >
+              {/* Holo Glow Ring */}
               <motion.div
-                variants={cardVariants}
-                initial="hidden"
-                animate={inView ? (hovered ? "hover" : "rest") : "hidden"}
-                className="ml-10 flex-1 bg-white dark:bg-[#0B0C10] rounded-lg p-6 border-2 border-solid"
+                className="absolute inset-0 rounded-full pointer-events-none"
+                animate={{
+                  opacity: hovered ? 1 : 0,
+                  scale: hovered ? 1.15 : 0.8,
+                }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                style={{
+                  background:
+                    "conic-gradient(from 0deg, #60a5fa, #a78bfa, #ec4899, #f59e0b, #60a5fa)",
+                  width: "80px",
+                  height: "80px",
+                  filter: "blur(6px)",
+                  zIndex: 0,
+                }}
+              />
+
+              {/* Logo */}
+              <motion.div
+                className={`relative w-20 h-20 rounded-full flex items-center justify-center overflow-hidden
+                             border-4 border-white dark:border-gray-900 shadow-xl z-10
+                             ${exp.bgColor}`}
+                animate={{
+                  scale: hovered ? 1.1 : 1,
+                  boxShadow: hovered
+                    ? "0 0 25px rgba(96,165,250,0.4)"
+                    : "0 8px 15px rgba(0,0,0,0.2)",
+                }}
+                transition={{ duration: 0.3 }}
               >
-                <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
-                  {exp.title}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">
-                  {exp.role}
-                </p>
-                <p className="text-sm italic text-gray-400 dark:text-gray-500 mt-1">
-                  {exp.period}
-                </p>
-                <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
-                  {exp.description}
-                </p>
+                <img
+                  src={exp.logo}
+                  alt={exp.title}
+                  className={`w-full h-full object-contain p-0 scale-105 ${
+                    exp.logoClass ?? ""
+                  }`}
+                />
               </motion.div>
-            </>
-          )}
-        </AnimatePresence>
-      </div>
-    </>
+            </motion.div>
+          </div>
+
+          {/* Right side: Text Card */}
+          <motion.div
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="rest"
+            animate={hovered ? "hover" : "rest"}
+            viewport={{ once: true }}
+            className="ml-10 flex-1 bg-white dark:bg-[#0B0C10] rounded-lg p-6 border-2 border-solid transition-transform duration-300 ease-in-out"
+            style={{ borderColor: "#ffffff" }} // Default-Border
+            whileHover={{
+              borderColor: "#60a5fa", // blau beim Hover
+              transition: { duration: 0.4, ease: "easeInOut" },
+            }}
+          >
+            <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+              {exp.title}
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">
+              {exp.role}
+            </p>
+            <p className="text-sm italic text-gray-400 dark:text-gray-500 mt-1">
+              {exp.period}
+            </p>
+            <p className="mt-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+              {exp.description}
+            </p>
+          </motion.div>
+        </>
+      )}
+    </div>
   );
 }
