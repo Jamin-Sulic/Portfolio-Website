@@ -8,6 +8,7 @@ import ExperienceTimeline from "./components/ExperienceTimeline";
 import TechStackSection from "./components/TechStackSection";
 import SocialBubbles from "./components/SocialsBubbles";
 import ProjectsSection from "./components/ProjectSection";
+import AboutMeSection from "./components/AboutMeSection";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -25,10 +26,11 @@ export default function Home() {
       ) : (
         <>
           <HeroSection />
-          <SocialBubbles/>
           <ExperienceTimeline />
           <TechStackSection />
           <ProjectsSection />
+          <AboutMeSection />
+          <SocialBubbles/>
         </>
       )}
 

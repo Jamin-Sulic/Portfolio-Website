@@ -7,7 +7,6 @@ import { Github, Linkedin, Mail, FileText } from "lucide-react";
 export default function SocialBubbles() {
   const [showCV, setShowCV] = useState(false);
 
-  // 👇 TypeScript nicht meckern lassen
   const iconVariants: any = {
     initial: { scale: 1, boxShadow: "none" },
     hover: (shadow: string) => ({
@@ -41,10 +40,18 @@ export default function SocialBubbles() {
     },
   ];
 
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
+      {/* Floating Social Icons */}
       <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50 will-change-transform">
-        {icons.map((item, i) => (
+        {icons.map((item) => (
           <motion.a
             key={item.name}
             href={item.link}
@@ -77,6 +84,45 @@ export default function SocialBubbles() {
         </motion.button>
       </div>
 
+      {/* Footer */}
+      <footer className="w-full py-8 mt-32 bg-gray-200 dark:bg-[#0b0c10] border-t border-gray-300 dark:border-gray-800 text-center text-gray-700 dark:text-gray-400 transition-colors duration-500">
+        <div className="max-w-5xl mx-auto flex flex-col items-center gap-4 px-6">
+          {/* Quick Links */}
+          <div className="flex flex-wrap justify-center gap-6 text-sm md:text-base">
+            <button
+              onClick={() => scrollToSection("home")}
+              className="hover:text-blue-500 transition-colors"
+            >
+              Home
+            </button>
+            <button
+              onClick={() => scrollToSection("experience")}
+              className="hover:text-blue-500 transition-colors"
+            >
+              Experience
+            </button>
+            <button
+              onClick={() => scrollToSection("about")}
+              className="hover:text-blue-500 transition-colors"
+            >
+              About Me
+            </button>
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="hover:text-blue-500 transition-colors"
+            >
+              Contact
+            </button>
+          </div>
+
+          {/* Copyright */}
+          <div className="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+            © {new Date().getFullYear()} Jamin Sulic — All rights reserved.
+          </div>
+        </div>
+      </footer>
+
+      {/* CV Popup */}
       <AnimatePresence>
         {showCV && (
           <motion.div
