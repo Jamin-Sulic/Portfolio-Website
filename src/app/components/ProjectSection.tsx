@@ -10,7 +10,7 @@ const projects = [
     title: "AI Market Predictor",
     description:
       "An intelligent financial analysis platform that aggregates historical data from stocks, bonds, and crypto markets. Users can pick any past date to visualize real market trends — or enter a future date to generate predictive insights powered by machine learning models (LSTM + sentiment analysis). Built with Python, TensorFlow, and Next.js.",
-    image: "/images/ai-market.png",
+    image: "/Stock_Vision.png",
     video: "/videos/ai-market-preview.mp4",
     github: "https://github.com/yourusername/ai-market-predictor",
     website: "https://ai-market-predictor.vercel.app",
@@ -19,7 +19,7 @@ const projects = [
     title: "Liar’s Dice Online",
     description:
       "A real-time multiplayer bluffing game where players can create lobbies, chat via integrated Voice API, and track their wins and statistics on personal profiles. Built using React for the frontend and Spring Boot for the backend, with WebSockets for real-time updates.",
-    image: "/images/liars-dice.png",
+    image: "/Liars_Dice.png",
     video: "/videos/liars-dice-preview.mp4",
     github: "https://github.com/yourusername/liars-dice",
     website: "https://liars-dice.vercel.app",

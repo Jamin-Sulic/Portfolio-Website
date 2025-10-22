@@ -41,16 +41,16 @@ export default function AboutGoogle() {
           className="p-4 sm:p-6 rounded-2xl"
         >
           <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
-            Jamin Sulic — Business Informatics Student @ UZH
+            Jamin Sulic Business Informatics Student @ UZH
           </h3>
 
           <p className="text-gray-700 dark:text-gray-300 mb-2">
             I’m passionate about automation, efficient systems, and creating seamless digital experiences.  
-            My goal is to make everyday processes smoother — one smart solution at a time.
+            My goal is to make everyday processes smoother, one smart solution at a time.
           </p>
 
           <p className="text-gray-700 dark:text-gray-300">
-            Outside of tech: volleyball, gym, and a perfectly brewed espresso ☕.
+            Outside of tech: volleyball, gym and a perfectly brewed espresso ☕.
           </p>
 
           <motion.p

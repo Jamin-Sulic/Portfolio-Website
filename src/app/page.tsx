@@ -9,6 +9,7 @@ import TechStackSection from "./components/TechStackSection";
 import SocialBubbles from "./components/SocialsBubbles";
 import ProjectsSection from "./components/ProjectSection";
 import AboutMeSection from "./components/AboutMeSection";
+import MenuBar from "./components/MenuBar";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,7 @@ export default function Home() {
           <TechStackSection />
           <ProjectsSection />
           <AboutMeSection />
+          <MenuBar />
           <SocialBubbles/>
         </>
       )}
