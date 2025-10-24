@@ -46,6 +46,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="home"
       className="relative flex flex-col items-center justify-center h-screen text-center px-6
                  bg-white text-gray-900 dark:bg-[#0B0C10] dark:text-gray-100 transition-colors duration-500 ease-in-out"
     >

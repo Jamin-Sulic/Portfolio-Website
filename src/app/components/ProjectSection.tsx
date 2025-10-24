@@ -49,7 +49,7 @@ export default function ProjectsSection() {
               alt={project.title}
               width={800}
               height={600}
-              className="object-cover w-full h-64 transition-opacity duration-500 group-hover:opacity-0"
+              className="object-cover w-full h-64 bg-gray-100 dark:bg-black transition-opacity duration-500 group-hover:opacity-0"
             />
 
             {/* Video Preview */}

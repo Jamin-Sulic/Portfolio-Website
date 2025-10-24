@@ -10,13 +10,21 @@ export default function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleLinkClick = () => {
+  // Smooth Scroll zu einer Section
+  const scrollToSection = (id: string) => {
+    const element = document.querySelector(id);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
     setIsMenuOpen(false);
   };
 
   return (
     <>
-      {/* Background Overlay - muss VOR der Sidebar kommen */}
+      {/* Hintergrund-Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -30,7 +38,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Sidebar Menu */}
+      {/* Sidebar Menü */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -41,46 +49,41 @@ export default function Navbar() {
             transition={{ type: "spring", stiffness: 150, damping: 25 }}
           >
             {/* Menu Links */}
-            <a
-              href="#home"
-              onClick={handleLinkClick}
+            <button
+              onClick={() => scrollToSection("#home")}
               className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors"
             >
               Home
-            </a>
-            <a
-              href="#experience"
-              onClick={handleLinkClick}
+            </button>
+            <button
+              onClick={() => scrollToSection("#experience")}
               className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors"
             >
               Experience
-            </a>
-            <a
-              href="#techstack"
-              onClick={handleLinkClick}
+            </button>
+            <button
+              onClick={() => scrollToSection("#techstack")}
               className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors"
             >
               Tech Stack
-            </a>
-            <a
-              href="#projects"
-              onClick={handleLinkClick}
+            </button>
+            <button
+              onClick={() => scrollToSection("#projects")}
               className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors"
             >
               Projects
-            </a>
-            <a
-              href="#about"
-              onClick={handleLinkClick}
+            </button>
+            <button
+              onClick={() => scrollToSection("#about")}
               className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors"
             >
               About Me
-            </a>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Burger Menu Button */}
+      {/* Burger Menü Button */}
       <div className="fixed top-6 left-6 z-50 flex items-center justify-center cursor-pointer">
         <motion.div
           onClick={handleMenuToggle}

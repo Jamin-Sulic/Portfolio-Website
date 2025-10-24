@@ -45,7 +45,7 @@ export default function TechBubblesSection() {
 
   return (
     <section
-      id="techbubbles"
+      id="techstack"
       className="relative flex flex-col items-center justify-center min-h-screen
                  text-gray-900 dark:text-white overflow-hidden transition-colors duration-500 ease-in-out"
       onClick={() => open && setOpen(false)}
