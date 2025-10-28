@@ -5,7 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { X } from "lucide-react";
 
-const projects = [
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  video: string;
+  github: string;
+  website: string;
+}
+
+const projects: Project[] = [
   {
     title: "AI Market Predictor",
     description:
@@ -16,7 +25,7 @@ const projects = [
     website: "https://ai-market-predictor.vercel.app",
   },
   {
-    title: "Liar’s Dice Online",
+    title: "Liar's Dice Online",
     description:
       "A real-time multiplayer bluffing game where players can create lobbies, chat via integrated Voice API, and track their wins and statistics on personal profiles. Built using React for the frontend and Spring Boot for the backend, with WebSockets for real-time updates.",
     image: "/Liars_Dice.png",
@@ -27,7 +36,7 @@ const projects = [
 ];
 
 export default function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <section id="projects" className="max-w-6xl mx-auto py-24 px-6">
@@ -78,6 +87,7 @@ export default function ProjectsSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setSelectedProject(null)}
           >
             <motion.div
               className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-3xl w-full overflow-hidden relative"
@@ -85,6 +95,7 @@ export default function ProjectsSection() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button

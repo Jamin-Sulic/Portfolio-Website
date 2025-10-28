@@ -56,7 +56,7 @@ export default function HeroSection() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        Hi, I'm <span className="text-blue-600 dark:text-blue-400">Jamin Sulic</span>
+        Hi, I&apos;m <span className="text-blue-600 dark:text-blue-400">Jamin Sulic</span>
       </motion.h1>
 
       <motion.p

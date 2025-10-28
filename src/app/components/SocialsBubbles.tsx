@@ -1,13 +1,13 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { useState } from "react";
 import { Github, Linkedin, Mail, FileText } from "lucide-react";
 
 export default function SocialBubbles() {
   const [showCV, setShowCV] = useState(false);
 
-  const iconVariants: any = {
+  const iconVariants: Variants = {
     initial: { scale: 1, boxShadow: "none" },
     hover: (shadow: string) => ({
       scale: 1.15,
@@ -130,6 +130,7 @@ export default function SocialBubbles() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setShowCV(false)}
           >
             <motion.div
               className="relative bg-white dark:bg-[#111] rounded-xl shadow-2xl w-[90%] max-w-4xl h-[80vh] overflow-hidden"
@@ -137,10 +138,11 @@ export default function SocialBubbles() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setShowCV(false)}
-                className="absolute top-4 right-4 text-gray-600 dark:text-gray-300 hover:text-red-500"
+                className="absolute top-4 right-4 text-gray-600 dark:text-gray-300 hover:text-red-500 z-10"
               >
                 ✕
               </button>

@@ -4,7 +4,17 @@ import { Variants, Transition, motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useState } from "react";
 
-const experiences = [
+interface Experience {
+  period: string;
+  title: string;
+  role: string;
+  description: string;
+  logo: string;
+  bgColor: string;
+  logoClass?: string;
+}
+
+const experiences: Experience[] = [
   {
     period: "Jun 2025 – Sep 2025",
     title: "Julius Bär",
@@ -83,7 +93,7 @@ const cardVariants: Variants = {
 };
 
 // --- TimelineItem Component ---
-function TimelineItem({ exp }: { exp: any }) {
+function TimelineItem({ exp }: { exp: Experience }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
   const [hovered, setHovered] = useState(false);
 
@@ -136,6 +146,7 @@ function TimelineItem({ exp }: { exp: any }) {
                 }}
                 transition={{ duration: 0.3 }}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={exp.logo}
                   alt={exp.title}
@@ -155,9 +166,9 @@ function TimelineItem({ exp }: { exp: any }) {
             animate={hovered ? "hover" : "rest"}
             viewport={{ once: true }}
             className="ml-10 flex-1 bg-white dark:bg-[#0B0C10] rounded-lg p-6 border-2 border-solid transition-transform duration-300 ease-in-out"
-            style={{ borderColor: "#ffffff" }} // Default-Border
+            style={{ borderColor: "#ffffff" }}
             whileHover={{
-              borderColor: "#60a5fa", // blau beim Hover
+              borderColor: "#60a5fa",
               transition: { duration: 0.4, ease: "easeInOut" },
             }}
           >
