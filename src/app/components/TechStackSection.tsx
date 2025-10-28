@@ -24,6 +24,7 @@ import {
 export default function TechBubblesSection() {
   const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [darkMode, setDarkMode] = useState(false); // für Demo, setze via Context oder Hook
 
   const techs = [
     { name: "React", icon: <FaReact className="text-sky-400" /> },
@@ -44,14 +45,22 @@ export default function TechBubblesSection() {
 
   return (
     <section
-      id="techbubbles"
-      key="techbubbles"
+      id="techstack"
       className="relative flex flex-col items-center justify-center min-h-screen
-                 bg-white text-gray-900 
-                 dark:bg-gray-900 dark:text-gray-100 
-                 overflow-hidden transition-colors duration-700 ease-in-out"
+                 text-gray-900 dark:text-white overflow-hidden transition-colors duration-500 ease-in-out"
       onClick={() => open && setOpen(false)}
     >
+      {/* Motion Gradient Background */}
+      <motion.div
+        className="absolute inset-0 -z-20 blur-3xl"
+        animate={{
+          background: darkMode
+            ? "conic-gradient(from 0deg, #1E3A8A, #4338CA, #9333EA, #EC4899, #1E3A8A)"
+            : "conic-gradient(from 0deg, #BFDBFE, #60A5FA, #818CF8, #A78BFA, #BFDBFE)",
+        }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
+      />
+
       {/* Center Container */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         {/* Pop Me Balloon */}
@@ -85,14 +94,15 @@ export default function TechBubblesSection() {
 
         {/* Title */}
         <AnimatePresence>
-          {open && (
+          {open && !hovered && (
             <motion.h2
               key="title"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.6, duration: 0.6, type: "spring" }}
-              className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-32
-                         text-3xl font-bold text-blue-600 dark:text-blue-400"
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ delay: 0.6, duration: 0.3, type: "spring" }}
+              className="absolute top-112 left-1/2 -translate-x-1/2 -translate-y-32
+                         text-3xl font-bold text-blue-400"
             >
               My Tech Universe
             </motion.h2>
@@ -102,10 +112,7 @@ export default function TechBubblesSection() {
         {/* Orbit Bubbles */}
         <AnimatePresence>
           {open && (
-            <div
-              key="orbit"
-              className="relative w-[680px] h-[680px]"
-            >
+            <div key="orbit" className="relative w-[680px] h-[680px]">
               {techs.map((tech, i) => {
                 const radius = 260;
                 const angle = (i / techs.length) * 2 * Math.PI;
@@ -114,45 +121,43 @@ export default function TechBubblesSection() {
                 const active = hovered === tech.name;
 
                 return (
-                  <motion.div
+                  <div
                     key={tech.name}
-                    initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                    animate={{
-                      opacity: 1,
-                      scale: active ? 1.35 : 1,
-                      x: active ? 0 : x,
-                      y: active ? 0 : y,
-                      zIndex: active ? 50 : 1,
-                    }}
-                    exit={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 260,
-                      damping: 20,
-                      mass: 0.5,
-                      delay: active ? 0 : i * 0.03,
-                    }}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                    style={{
-                      left: active ? '50%' : `calc(50% + ${x}px)`,
-                      top: active ? '50%' : `calc(50% + ${y}px)`,
-                    }}
+                    style={{ transform: `translate(${x}px, ${y}px)` }}
+                    onMouseEnter={() => setHovered(tech.name)}
+                    onMouseLeave={() => setHovered(null)}
                   >
-                    <div
-                      onMouseEnter={() => setHovered(tech.name)}
-                      onMouseLeave={() => setHovered(null)}
-                      className={`w-24 h-24 flex flex-col items-center justify-center 
+                    <div className="absolute -inset-10" />
+
+                    <motion.div
+                      layout
+                      animate={{
+                        scale: active ? 1.35 : 1,
+                        x: active ? -x : 0,
+                        y: active ? -y : 0,
+                        zIndex: active ? 50 : 1,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 230,
+                        damping: 18,
+                        mass: 0.6,
+                      }}
+                      className={`w-24 h-24 
+                                  flex flex-col items-center justify-center 
                                   rounded-full text-xs font-medium select-none
                                   shadow-lg cursor-pointer
                                   ${active
                                     ? "bg-gradient-to-br from-blue-500 to-blue-300 shadow-blue-400/60 shadow-2xl"
                                     : "bg-gradient-to-br from-blue-800 to-blue-500 hover:shadow-blue-400/40"
                                   }`}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <div className="text-3xl">{tech.icon}</div>
                       <span className="mt-1">{tech.name}</span>
-                    </div>
-                  </motion.div>
+                    </motion.div>
+                  </div>
                 );
               })}
             </div>
@@ -169,20 +174,12 @@ export default function TechBubblesSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.3 }}
-            className="absolute bottom-20 text-lg font-medium text-blue-600 dark:text-blue-300"
+            className="absolute bottom-20 text-lg font-medium text-blue-300"
           >
             {hovered}
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Background Glow */}
-      <div
-        className="absolute inset-0 -z-10 blur-3xl 
-                   bg-gradient-to-t from-blue-200/30 via-transparent to-blue-500/20 
-                   dark:from-blue-400/20 dark:via-transparent dark:to-indigo-800/30 
-                   transition-colors duration-700 ease-in-out"
-      />
     </section>
   );
 }

@@ -79,6 +79,12 @@ export default function Navbar() {
             >
               About Me
             </button>
+            <button
+              onClick={() => window.dispatchEvent(new Event("openContactPopup"))}
+              className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors"
+            >
+              Contact
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

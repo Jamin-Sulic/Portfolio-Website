@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function HeroSection() {
   const [showPopup, setShowPopup] = useState(false);
@@ -12,6 +12,17 @@ export default function HeroSection() {
   });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
+  useEffect(() => {
+  const openHandler = () => {
+    setTimeout(() => setShowPopup(true), 100);
+  };
+
+  window.addEventListener("openContactPopup", openHandler);
+
+  return () => window.removeEventListener("openContactPopup", openHandler);
+}, []);
+
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -21,7 +32,7 @@ export default function HeroSection() {
 
     setStatus("sending");
     try {
-      const response = await fetch("https://formspree.io/f/xrbyobok", { // 👈 DEIN FORMSPREE LINK HIER
+      const response = await fetch("https://formspree.io/f/xrbyobok", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -96,7 +107,6 @@ export default function HeroSection() {
         </button>
       </motion.div>
 
-
       {/* Popup */}
       <AnimatePresence>
         {showPopup && (
@@ -117,7 +127,6 @@ export default function HeroSection() {
                 Send me a message 💬
               </h3>
 
-              {/* Name */}
               <input
                 type="text"
                 name="name"
@@ -127,7 +136,6 @@ export default function HeroSection() {
                 className="w-full mb-3 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#0B0C10]"
               />
 
-              {/* Contact Info */}
               <input
                 type="text"
                 name="contact"
@@ -137,7 +145,6 @@ export default function HeroSection() {
                 className="w-full mb-3 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#0B0C10]"
               />
 
-              {/* Message */}
               <textarea
                 name="message"
                 placeholder="Write your message..."
@@ -146,7 +153,6 @@ export default function HeroSection() {
                 className="w-full h-32 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#0B0C10]"
               />
 
-              {/* Buttons */}
               <div className="mt-4 flex justify-end gap-3">
                 <button
                   onClick={() => setShowPopup(false)}
@@ -163,7 +169,6 @@ export default function HeroSection() {
                 </button>
               </div>
 
-              {/* ✅ Status Feedback */}
               <AnimatePresence>
                 {status === "success" && (
                   <motion.p
@@ -191,7 +196,6 @@ export default function HeroSection() {
         )}
       </AnimatePresence>
 
-      {/* Background Gradient */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-blue-900/20 via-transparent to-blue-600/10 blur-3xl"></div>
     </section>
   );

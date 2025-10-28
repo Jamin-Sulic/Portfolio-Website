@@ -108,7 +108,7 @@ export default function SocialBubbles() {
               About Me
             </button>
             <button
-              onClick={() => scrollToSection("contact")}
+              onClick={() => window.dispatchEvent(new Event("openContactPopup"))}
               className="hover:text-blue-500 transition-colors"
             >
               Contact

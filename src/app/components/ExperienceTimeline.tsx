@@ -56,8 +56,27 @@ export default function ExperienceTimeline() {
       </h2>
 
       <div className="relative pl-10">
-        {/* Vertical timeline line */}
-        <div className="absolute left-[2.5rem] top-0 bottom-0 w-[2px] bg-gradient-to-b from-blue-400 to-blue-600 dark:from-blue-300 dark:to-blue-500 rounded-full" />
+        {/* Main Timeline Line - extended */}
+        <motion.div
+          className="absolute left-[2.5rem] -top-18 -bottom-18 w-[2.5px]
+                     bg-gradient-to-b from-transparent via-blue-500/90 to-transparent
+                     dark:via-blue-400/80 rounded-full"
+          initial={{ opacity: 0.2 }}
+          whileInView={{
+            opacity: 1,
+            filter: "drop-shadow(0 0 8px rgba(96,165,250,0.5))",
+          }}
+          viewport={{ once: false }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+
+        {/* Longer Soft Fade Overlays */}
+        <div className="absolute left-[2.45rem] -top-12 w-[4px] h-40
+                        bg-gradient-to-b from-white/0 via-white/40 to-white
+                        dark:from-gray-900/0 dark:via-gray-900/40 dark:to-gray-900 pointer-events-none" />
+        <div className="absolute left-[2.45rem] -bottom-12 w-[4px] h-40
+                        bg-gradient-to-t from-white/0 via-white/40 to-white
+                        dark:from-gray-900/0 dark:via-gray-900/40 dark:to-gray-900 pointer-events-none" />
 
         {experiences.map((exp, i) => (
           <TimelineItem key={i} exp={exp} />
