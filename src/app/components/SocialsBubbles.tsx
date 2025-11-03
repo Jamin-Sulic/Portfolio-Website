@@ -57,7 +57,7 @@ export default function SocialBubbles() {
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className={`w-12 h-12 rounded-full bg-gradient-to-br ${item.bg} flex items-center justify-center text-white shadow-lg cursor-pointer`}
+            className={`w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${item.bg} flex items-center justify-center text-white shadow-lg cursor-pointer`}
             custom={item.shadow}
             variants={iconVariants}
             initial="initial"
@@ -72,7 +72,7 @@ export default function SocialBubbles() {
         {/* CV Button */}
         <motion.button
           onClick={() => setShowCV(true)}
-          className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-400 flex items-center justify-center text-white shadow-lg cursor-pointer"
+          className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-green-500 to-green-400 flex items-center justify-center text-white shadow-lg cursor-pointer"
           custom={"0 0 25px rgba(34,197,94,0.6)"}
           variants={iconVariants}
           initial="initial"

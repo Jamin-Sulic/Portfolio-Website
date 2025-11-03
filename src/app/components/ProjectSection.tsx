@@ -12,26 +12,29 @@ interface Project {
   video: string;
   github: string;
   website: string;
+  techs: string[]; 
 }
 
 const projects: Project[] = [
   {
-    title: "AI Market Predictor",
+    title: "AI Market Predictor (COMMING SOON)",
     description:
-      "An intelligent financial analysis platform that aggregates historical data from stocks, bonds, and crypto markets. Users can pick any past date to visualize real market trends — or enter a future date to generate predictive insights powered by machine learning models (LSTM + sentiment analysis). Built with Python, TensorFlow, and Next.js.",
+      "An intelligent financial analysis platform that aggregates historical data from stocks, bonds, and crypto markets. Users can pick any past date to visualize real market trends or enter a future date to generate predictive insights powered by machine learning models (LSTM + sentiment analysis). Built with Python, TensorFlow, and Next.js.",
     image: "/Stock_Vision.png",
     video: "/videos/ai-market-preview.mp4",
     github: "https://github.com/yourusername/ai-market-predictor",
     website: "https://ai-market-predictor.vercel.app",
+    techs: ["Python", "TensorFlow", "Next.js", "Machine Learning"],
   },
   {
     title: "Liar's Dice Online",
     description:
-      "A real-time multiplayer bluffing game where players can create lobbies, chat via integrated Voice API, and track their wins and statistics on personal profiles. Built using React for the frontend and Spring Boot for the backend, with WebSockets for real-time updates.",
+      "A real-time multiplayer bluffing game where players can create lobbies, chat via integrated Voice API, and track their wins and statistics on personal profiles. Dice are rolled, players raise bets on total counts, or call out a bluff to expose a lie. Built using React for the frontend and Spring Boot for the backend, with WebSockets for real-time updates.",
     image: "/Liars_Dice.png",
-    video: "/videos/liars-dice-preview.mp4",
-    github: "https://github.com/yourusername/liars-dice",
-    website: "https://liars-dice.vercel.app",
+    video: "/Liars_Dice_Preview.mp4",
+    github: "https://github.com/sopra-fs24-16-dudo",
+    website: "https://github.com/sopra-fs24-16-dudo",
+    techs: ["React", "Spring Boot", "WebSocket", "API"],
   },
 ];
 
@@ -125,6 +128,22 @@ export default function ProjectsSection() {
                     {selectedProject.description}
                   </p>
 
+                  {/* 🧠 Tech Tags */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {selectedProject.techs.map((tech, i) => (
+                      <motion.span
+                        key={i}
+                        className="px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 border border-blue-300 dark:border-blue-700"
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                      >
+                        {tech}
+                      </motion.span>
+                    ))}
+                  </div>
+
+                  {/* Buttons */}
                   <div className="flex gap-4">
                     <a
                       href={selectedProject.github}
