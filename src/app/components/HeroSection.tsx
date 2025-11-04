@@ -5,23 +5,30 @@ import { useState, useEffect } from "react";
 
 export default function HeroSection() {
   const [showPopup, setShowPopup] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", contact: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [doneTyping, setDoneTyping] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  const roles = [
+    "Developer – bridging business and technology through clean design and smart systems.",
+    "Thinker – transforming complex problems into elegant solutions.",
+    "Problem Solver – turning challenges into opportunities with innovation.",
+    "Creator – building experiences that make a difference."
+  ];
 
   useEffect(() => {
-  const openHandler = () => {
-    setTimeout(() => setShowPopup(true), 100);
-  };
+    const timer = setTimeout(() => setDoneTyping(true), 2400);
+    return () => clearTimeout(timer);
+  }, []);
 
-  window.addEventListener("openContactPopup", openHandler);
-
-  return () => window.removeEventListener("openContactPopup", openHandler);
-}, []);
-
+  useEffect(() => {
+    if (!doneTyping) return;
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [doneTyping, roles.length]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -41,13 +48,9 @@ export default function HeroSection() {
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", contact: "", message: "" });
-        setTimeout(() => {
-          setShowPopup(false);
-          setStatus("idle");
-        }, 2000);
-      } else {
-        throw new Error("Formspree error");
-      }
+        setTimeout(() => setShowPopup(false), 2000);
+        setTimeout(() => setStatus("idle"), 2000);
+      } else throw new Error("Formspree error");
     } catch (error) {
       console.error(error);
       setStatus("error");
@@ -61,32 +64,52 @@ export default function HeroSection() {
       className="relative flex flex-col items-center justify-center h-screen text-center px-6
                  bg-white text-gray-900 dark:bg-[#0B0C10] dark:text-gray-100 transition-colors duration-500 ease-in-out"
     >
+      {/* Header mit Typing */}
       <motion.h1
-        className="text-5xl md:text-6xl font-bold mb-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        className="text-5xl md:text-6xl font-bold flex justify-center"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        Hi, I&apos;m <span className="text-blue-600 dark:text-blue-400">Jamin Sulic</span>
+        <span className="text-gray-900 dark:text-white mr-6">Hi, I&apos;m</span>
+        <motion.span
+          className={`typewriter text-blue-600 dark:text-blue-400 ${doneTyping ? "done" : ""}`}
+          animate={doneTyping ? {} : {}}>
+          Jamin&nbsp;Sulic
+        </motion.span>
       </motion.h1>
 
-      <motion.p
-        className="text-lg md:text-xl max-w-2xl text-gray-700 dark:text-gray-300"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
-      >
-        Based in Zürich, Switzerland 🇨🇭 <br />
-        Developer – bridging business and technology through clean design and smart systems.
-      </motion.p>
-
+      {/* Text */}
       <motion.div
-        className="mt-8 flex gap-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
+        className="text-lg md:text-xl max-w-2xl text-gray-700 dark:text-gray-300 mt-6"
+        initial={{ opacity: 0, y: 40 }}
+        animate={doneTyping ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.4 }}
       >
-        <button
+        <p className="mb-2">Based in Zürich, Switzerland 🇨🇭</p>
+        <div className="h-[3.5rem] md:h-[3rem] flex items-center justify-center overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={roleIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+            >
+              {roles[roleIndex]}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+      </motion.div>
+
+      {/* Buttons */}
+      <motion.div
+        className="flex gap-6 mt-6"
+        initial={{ opacity: 0, y: 40 }}
+        animate={doneTyping ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.7, type: "spring", stiffness: 120 }}
+      >
+        <motion.button
           onClick={() => {
             const projectsSection = document.getElementById("projects");
             if (projectsSection) {
@@ -94,20 +117,21 @@ export default function HeroSection() {
             }
           }}
           className="px-6 py-3 rounded-lg font-medium transition
-                    bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                     bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+          whileHover={{ scale: 1.05 }}
         >
           View Projects
-        </button>
+        </motion.button>
 
-        <button
+        <motion.button
           onClick={() => setShowPopup(true)}
           className="px-6 py-3 rounded-lg font-medium border border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-500 hover:text-white transition"
+          whileHover={{ scale: 1.05 }}
         >
           Contact Me
-        </button>
+        </motion.button>
       </motion.div>
-
-      {/* Popup */}
+       {/* Popup / Contact Form */}
       <AnimatePresence>
         {showPopup && (
           <motion.div
@@ -121,7 +145,7 @@ export default function HeroSection() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
             >
               <h3 className="text-xl font-semibold mb-4 text-blue-500">
                 Send me a message 💬
@@ -169,34 +193,30 @@ export default function HeroSection() {
                 </button>
               </div>
 
-              <AnimatePresence>
-                {status === "success" && (
-                  <motion.p
-                    className="text-green-500 text-sm mt-4 text-center"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    ✅ Message sent successfully!
-                  </motion.p>
-                )}
-                {status === "error" && (
-                  <motion.p
-                    className="text-red-500 text-sm mt-4 text-center"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    ❌ Something went wrong. Try again.
-                  </motion.p>
-                )}
-              </AnimatePresence>
+              {status === "success" && (
+                <motion.p
+                  className="text-green-500 text-sm mt-4 text-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  ✅ Message sent successfully!
+                </motion.p>
+              )}
+              {status === "error" && (
+                <motion.p
+                  className="text-red-500 text-sm mt-4 text-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  ❌ Something went wrong. Try again.
+                </motion.p>
+              )}
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <div className="absolute inset-0 -z-10 bg-gradient-to-tr from-blue-900/20 via-transparent to-blue-600/10 blur-3xl"></div>
     </section>
   );
 }

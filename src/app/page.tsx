@@ -21,12 +21,12 @@ export default function Home() {
 
   return (
 <main className="min-h-screen bg-white text-gray-900 dark:bg-[#0B0C10] dark:text-gray-100 transition-colors duration-500">
-      <ThemeSwitch />
       {loading ? (
         <BootScreen />
       ) : (
         <>
           <HeroSection />
+          <ThemeSwitch />
           <ExperienceTimeline />
           <TechStackSection />
           <ProjectsSection />
