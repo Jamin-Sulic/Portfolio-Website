@@ -195,8 +195,22 @@ export default function TechStackSection() {
     </section>
   );
 }
+interface TechItem {
+  name: string;
+  icon: React.ReactNode;
+  color: string;
+  description: string;
+}
 
-function TechCard({ tech, index, isHovered, onHover, onLeave }: any) {
+interface TechCardProps {
+  tech: TechItem;
+  index: number;
+  isHovered: boolean;
+  onHover: () => void;
+  onLeave: () => void;
+}
+
+function TechCard({ tech, index, isHovered, onHover, onLeave }: TechCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   
   const mouseX = useMotionValue(0);
