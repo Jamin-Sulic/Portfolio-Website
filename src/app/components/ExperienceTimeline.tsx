@@ -58,8 +58,8 @@ export default function ExperienceTimeline() {
       <div className="relative pl-10">
         {/* Main Timeline Line - extended */}
         <motion.div
-          className="absolute left-[2.5rem] -top-18 -bottom-18 w-[2.5px]
-                     bg-gradient-to-b from-transparent via-blue-500/90 to-transparent
+          className="absolute left-[2.5rem] -top-25 -bottom-25 w-[2.5px]
+                     bg-gradient-to-b from-transparent via-orange-400/80 to-transparent
                      dark:via-blue-400/80 rounded-full"
           initial={{ opacity: 0.2 }}
           whileInView={{
@@ -184,14 +184,14 @@ function TimelineItem({ exp }: { exp: Experience }) {
             whileInView="rest"
             animate={hovered ? "hover" : "rest"}
             viewport={{ once: true }}
-            className="ml-10 flex-1 bg-white dark:bg-[#0B0C10] rounded-lg p-6 border-2 border-solid transition-transform duration-300 ease-in-out"
-            style={{ borderColor: "#ffffff" }}
+            className="ml-10 flex-1 bg-gray-100 dark:bg-[#0B0C10] rounded-lg p-6 border-2 border-solid transition-transform duration-300 ease-in-out"
+            style={{ borderColor: "dark:#ffffff #ggggg" }}
             whileHover={{
               borderColor: "#60a5fa",
               transition: { duration: 0.4, ease: "easeInOut" },
             }}
           >
-            <h3 className="text-xl font-semibold text-blue-600 dark:text-blue-400">
+            <h3 className="text-xl font-semibold text-orange-600 dark:text-blue-400">
               {exp.title}
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-medium mt-1">

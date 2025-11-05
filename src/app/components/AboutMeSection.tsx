@@ -57,7 +57,7 @@ export default function AboutGoogle() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="mt-5 text-sm text-blue-500 dark:text-blue-400 font-medium"
+            className="mt-5 text-sm text-orange-600 dark:text-blue-400 font-medium"
           >
             #automation #UX #designthinking #coffee
           </motion.p>

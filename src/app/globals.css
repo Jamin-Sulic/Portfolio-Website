@@ -12,6 +12,7 @@
 }
 
 /* Typewriter Animation */
+/* Typewriter Animation */
 .typewriter {
   display: inline-block;
   overflow: hidden;
@@ -36,13 +37,10 @@
   }
 }
 
-/* Nach Ende der Animation Cursor sanft ausblenden ohne Layout-Shift */
+/* Nach Ende der Animation Cursor komplett entfernen */
 .typewriter.done {
-  border-right-color: transparent; /* unsichtbar, aber Platz bleibt gleich */
-  animation: none; /* blink stop */
-}
-.typewriter.done {
-  animation: fadeCursor 0.6s forwards;
+  border-right: none; /* Border komplett weg */
+  animation: none;
 }
 
 @keyframes fadeCursor {
