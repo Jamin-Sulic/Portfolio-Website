@@ -11,6 +11,7 @@ import SocialBubbles from "./components/SocialsBubbles";
 import ProjectsSection from "./components/ProjectSection";
 import AboutMeSection from "./components/AboutMeSection";
 import MenuBar from "./components/MenuBar";
+import MessageWall from "./components/MessageWall";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -82,6 +83,7 @@ export default function Home() {
           <ExperienceTimeline />
           <TechStackSection />
           <ProjectsSection />
+          <MessageWall />
           <AboutMeSection />
           <Footer scrollToSection={scrollToSection} />
         </>

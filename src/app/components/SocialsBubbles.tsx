@@ -40,13 +40,6 @@ export default function SocialBubbles() {
     },
   ];
 
-  const scrollToSection = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <>
       {/* Floating Social Icons */}

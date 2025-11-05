@@ -5,7 +5,6 @@ import { useState, useRef } from "react";
 import {
   FaReact,
   FaPython,
-  FaDocker,
   FaAws,
 } from "react-icons/fa";
 import {
@@ -66,8 +65,8 @@ export default function TechStackSection() {
     },
     { 
       name: "TensorFlow", 
-      icon: <FaPython className="text-orange-400" />,
-      color: "from-yellow-500/20 to-blue-500/20",
+      icon: <SiTensorflow className="text-orange-400" />,
+      color: "from-yellow-500/20 to-orange-500/20",
       description: "Backend & AI"
     },
     { 
@@ -103,7 +102,7 @@ export default function TechStackSection() {
      {
       name: "MongoDB", 
       icon: <SiMongodb className="text-green-400" />,
-      color: "from-blue-400/20 to-blue-600/20",
+      color: "from-green-400/20 to-green-600/20",
       description: "Database"
     },
     { 
@@ -115,13 +114,13 @@ export default function TechStackSection() {
     { 
       name: "AWS", 
       icon: <FaAws className="text-orange-400" />,
-      color: "from-indigo-400/20 to-blue-500/20",
+      color: "from-orange-400/20 to-orange-500/20",
       description: "Cloud Services"
     },
     { 
       name: "Docker", 
       icon: <SiDocker className="text-blue-400" />,
-      color: "from-indigo-400/20 to-blue-500/20",
+      color: "from-blue-400/20 to-blue-500/20",
       description: "Containerization"
     },
   
