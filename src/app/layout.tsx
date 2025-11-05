@@ -6,6 +6,8 @@ import ThemeProviderWrapper from "./providers/ThemeProviderWrapper";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Jamin's Portfolio",
   description: "Modern & Minimalist JS Mastery Portfolio",
