@@ -119,18 +119,24 @@ export default function HeroSection({ onDoneTyping }: HeroSectionProps) {
       {/* ✨ Content */}
       <div className="relative z-10 flex flex-col items-center justify-center">
         <motion.h1
-          className="text-5xl md:text-6xl font-bold flex justify-center items-baseline h-[4rem] md:h-[5rem]"
+          className="text-4xl sm:text-5xl md:text-6xl font-bold flex flex-col sm:flex-row justify-center items-center sm:items-baseline text-center sm:text-left leading-tight"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <span className="text-gray-900 dark:text-white mr-4">Hi, I&apos;m</span>
+          {/* Zeile 1: Hi, I’m */}
+          <span className="text-gray-900 dark:text-white sm:mr-3">
+            Hi, I&apos;m
+          </span>
+
+          {/* Zeile 2 (bei Mobile): Jamin Sulic */}
           <motion.span
-            className={`typewriter text-orange-600 dark:text-blue-400 ${doneTyping ? "done" : ""}`}
+            className={`typewriter text-orange-600 dark:text-blue-400 mt-1 sm:mt-0 ${doneTyping ? "done" : ""}`}
           >
             Jamin&nbsp;Sulic
           </motion.span>
         </motion.h1>
+
 
         <motion.div
           className="text-lg md:text-xl max-w-2xl text-gray-700 dark:text-gray-300 mt-6"
@@ -204,7 +210,7 @@ export default function HeroSection({ onDoneTyping }: HeroSectionProps) {
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 200, damping: 20 }}
             >
-              <h3 className="text-xl font-semibold mb-4 text-orange-500">Send me a message 💬</h3>
+              <h3 className="text-xl font-semibold mb-4 dark:text-blue-500 text-orange-500">Send me a message </h3>
 
               <input
                 type="text"
@@ -212,7 +218,7 @@ export default function HeroSection({ onDoneTyping }: HeroSectionProps) {
                 placeholder="Your Name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full mb-3 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-orange-500 dark:bg-[#0B0C10]"
+                className="w-full mb-3 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 dark:focus:ring-blue-500 focus:ring-orange-500 dark:bg-[#0B0C10]"
               />
               <input
                 type="text"
@@ -220,14 +226,14 @@ export default function HeroSection({ onDoneTyping }: HeroSectionProps) {
                 placeholder="Your Email or Phone"
                 value={formData.contact}
                 onChange={handleChange}
-                className="w-full mb-3 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-orange-500 dark:bg-[#0B0C10]"
+                className="w-full mb-3 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 dark:focus:ring-blue-500 focus:ring-orange-500 dark:bg-[#0B0C10]"
               />
               <textarea
                 name="message"
                 placeholder="Write your message..."
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full h-32 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 focus:ring-orange-500 dark:bg-[#0B0C10]"
+                className="w-full h-32 p-3 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-2 dark:focus:ring-blue-500 focus:ring-orange-500 dark:bg-[#0B0C10]"
               />
 
               <div className="mt-4 flex justify-end gap-3">
@@ -240,7 +246,7 @@ export default function HeroSection({ onDoneTyping }: HeroSectionProps) {
                 <button
                   onClick={handleSend}
                   disabled={status === 'sending'}
-                  className="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition disabled:opacity-50"
+                  className="px-4 py-2 rounded-md dark:bg-blue-600 bg-orange-600 text-white dark:hover:bg-blue-700 hover:bg-orange-700 transition disabled:opacity-50"
                 >
                   {status === 'sending' ? 'Sending...' : 'Send'}
                 </button>
