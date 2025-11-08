@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌐 Jamin Sulic — Portfolio Website
 
-## Getting Started
+> A modern, interactive, and fully responsive developer portfolio built with **Next.js**, **Tailwind CSS**, **Framer Motion**, and **Supabase**.
 
-First, run the development server:
+![Portfolio Preview](public/preview.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This is my personal portfolio website, designed to present my projects, skills, and contact information in a clean and dynamic way.  
+It includes interactive animations, a real-time message wall powered by **Supabase**, and a responsive UI optimized for both mobile and desktop.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🔗 **Live Demo:** [https://your-portfolio-domain.vercel.app](https://your-portfolio-domain.vercel.app)
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧠 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+✅ Animated Hero Section with Typewriter Effect  
+✅ Fully Responsive (Mobile-First) Layout  
+✅ Dark / Light Mode Toggle  
+✅ Real-time Message Wall (Supabase Realtime)  
+✅ Contact Form (Formspree Integration)  
+✅ Animated Tech Stack Cards (3D hover + glow)  
+✅ Smooth Scroll Navigation and Section Animations  
+✅ Optimized for SEO and Performance  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠️ Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Category | Technology |
+|-----------|-------------|
+| **Framework** | [Next.js 14](https://nextjs.org/) |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) |
+| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
+| **Database / Backend** | [Supabase](https://supabase.com/) |
+| **Forms** | [Formspree](https://formspree.io/) |
+| **Deployment** | [Vercel](https://vercel.com/) |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📂 Project Structure
+
+****
