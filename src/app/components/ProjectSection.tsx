@@ -18,14 +18,14 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "AI Market Predictor (COMING SOON)",
+    title: "StockVision",
     description:
-      "An intelligent financial analysis platform that aggregates historical data from stocks, bonds, and crypto markets. Users can pick any past date to visualize real market trends or enter a future date to generate predictive insights powered by machine learning models (LSTM + sentiment analysis). Built with Python, TensorFlow, and Next.js.",
+      "A personal deep learning experiment exploring whether technical indicators can predict short-term stock price direction (not financial advice) purely a data science project.\n\nThe pipeline starts in Jupyter notebooks where two models are trained per ticker: a Bidirectional LSTM that learns temporal price patterns from 60-day sequences across 22 engineered features (RSI, MACD, Bollinger Bands, momentum, volatility), and an XGBoost classifier that takes those LSTM predictions as an additional feature alongside the raw technicals to generate a directional signal. A Confidence Scorer then combines LSTM magnitude, XGBoost probability, and model agreement to filter low-confidence trades.\n\nThe backend is a FastAPI service deployed on Railway that loads the trained models on startup, runs on-demand backtests with full LSTM inference, and caches results in a Supabase PostgreSQL database. A GitHub Actions cron job runs daily_predict.py every weekday at 22:00 UTC to refresh predictions for all tickers. The frontend is a Next.js dashboard deployed on Vercel, visualizing live signals, price predictions, and historical equity curves comparing Buy & Hold vs XGBoost vs Scorer strategies.",
     image: "/Stock_Vision.png",
-    video: "/videos/ai-market-preview.mp4",
-    github: "https://github.com/yourusername/ai-market-predictor",
-    website: "https://ai-market-predictor.vercel.app",
-    techs: ["Python", "TensorFlow", "Next.js", "Machine Learning"],
+    video: "/Stock_Vision_Preview.mp4",
+    github: "https://github.com/Jamin-Sulic/StockVision",
+    website: "https://stockvision-alpha.vercel.app",
+    techs: ["Python", "TensorFlow", "XGBoost", "FastAPI", "Next.js", "Supabase"],
   },
   {
     title: "Liar's Dice Online",
@@ -144,7 +144,7 @@ export default function ProjectsSection() {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
+                  <p className="text-gray-700 dark:text-gray-300 mb-4 max-h-48 overflow-y-auto pr-1 whitespace-pre-line">
                     {selectedProject.description}
                   </p>
 
@@ -175,14 +175,16 @@ export default function ProjectsSection() {
                     >
                       GitHub
                     </a>
-                    <a
-                      href={selectedProject.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-lg text-white transition-colors duration-300 bg-orange-600 hover:bg-orange-500 dark:bg-blue-600 dark:hover:bg-blue-500"
-                    >
-                      Live Demo
-                    </a>
+                    {selectedProject.website && (
+                      <a
+                        href={selectedProject.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 rounded-lg text-white transition-colors duration-300 bg-orange-600 hover:bg-orange-500 dark:bg-blue-600 dark:hover:bg-blue-500"
+                      >
+                        Live Demo
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
