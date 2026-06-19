@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
@@ -14,10 +15,27 @@ const links = [
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const [revealed, setRevealed] = useState(pathname !== "/");
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    setRevealed(pathname !== "/");
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const reveal = () => {
+      window.setTimeout(() => setRevealed(true), 180);
+    };
+
+    window.addEventListener("hero-done-typing", reveal);
+    return () => window.removeEventListener("hero-done-typing", reveal);
+  }, [pathname]);
 
   return (
     <>
@@ -63,8 +81,13 @@ export default function Navbar() {
       </AnimatePresence>
 
       {/* Burger Menü Button */}
-      <div className="fixed top-6 left-6 z-50 flex items-center justify-center cursor-pointer">
-        <motion.div onClick={handleMenuToggle} className="relative w-8 h-6 flex flex-col justify-between">
+      <motion.div
+        className="fixed top-6 left-6 z-50 flex items-center justify-center cursor-pointer"
+        initial={{ opacity: 0, x: -60 }}
+        animate={revealed ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <motion.div onClick={handleMenuToggle} className="relative flex h-6 w-8 flex-col justify-between">
           <motion.div
             className="w-full h-[3px] rounded-full bg-gray-900 dark:bg-white"
             animate={{
@@ -89,7 +112,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
           />
         </motion.div>
-      </div>
+      </motion.div>
     </>
   );
 }

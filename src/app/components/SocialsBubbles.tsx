@@ -1,11 +1,14 @@
 "use client";
 
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Github, Linkedin, Mail, FileText } from "lucide-react";
 
 export default function SocialBubbles() {
   const [showCV, setShowCV] = useState(false);
+  const pathname = usePathname();
+  const [revealed, setRevealed] = useState(pathname !== "/");
 
   const iconVariants: Variants = {
     initial: { scale: 1, boxShadow: "none" },
@@ -40,10 +43,30 @@ export default function SocialBubbles() {
     },
   ];
 
+  useEffect(() => {
+    setRevealed(pathname !== "/");
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const reveal = () => {
+      window.setTimeout(() => setRevealed(true), 300);
+    };
+
+    window.addEventListener("hero-done-typing", reveal);
+    return () => window.removeEventListener("hero-done-typing", reveal);
+  }, [pathname]);
+
   return (
     <>
       {/* Floating Social Icons */}
-      <div className="fixed bottom-8 right-8 flex flex-col gap-4 z-50 will-change-transform">
+      <motion.div
+        className="fixed bottom-8 right-8 z-50 flex flex-col gap-4 will-change-transform"
+        initial={{ opacity: 0, x: 80, y: 20 }}
+        animate={revealed ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: 80, y: 20 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         {icons.map((item) => (
           <motion.a
             key={item.name}
@@ -72,10 +95,10 @@ export default function SocialBubbles() {
           whileHover="hover"
           whileTap={{ scale: 0.95 }}
           animate="initial"
-        >
-          <FileText size={22} />
-        </motion.button>
-      </div>
+          >
+            <FileText size={22} />
+          </motion.button>
+      </motion.div>
 
       {/* CV Popup */}
       <AnimatePresence>

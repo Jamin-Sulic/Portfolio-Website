@@ -29,6 +29,7 @@ export default function HeroSection({ onDoneTyping }: HeroSectionProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDoneTyping(true);
+      window.dispatchEvent(new Event("hero-done-typing"));
       if (onDoneTyping) onDoneTyping();
     }, 2400);
     return () => clearTimeout(timer);
@@ -128,31 +129,39 @@ export default function HeroSection({ onDoneTyping }: HeroSectionProps) {
           </div>
         </motion.div>
 
-        <motion.div
-          className="mt-10 flex flex-col gap-3 sm:flex-row"
-          initial={{ opacity: 0, y: 10 }}
-          animate={doneTyping ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.55 }}
-        >
-          <button
-            type="button"
-            onClick={() => {
-              document.getElementById("projects")?.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-              });
-            }}
-            className="inline-flex items-center justify-center rounded-lg bg-orange-600 px-6 py-3 font-medium text-white transition hover:bg-orange-700 dark:bg-blue-500 dark:hover:bg-blue-600"
-          >
-            View Projects
-          </button>
-          <a
-            href="/contact"
-            className="inline-flex items-center justify-center rounded-lg border border-orange-500 px-6 py-3 font-medium text-orange-700 transition hover:bg-orange-600 hover:text-white dark:border-blue-500 dark:text-blue-300 dark:hover:bg-blue-500 dark:hover:text-white"
-          >
-            Contact Me
-          </a>
-        </motion.div>
+        <AnimatePresence>
+          {doneTyping && (
+            <motion.div
+              className="mt-10 flex justify-center gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <motion.button
+                type="button"
+                onClick={() => {
+                  document.getElementById("projects")?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }}
+                className="rounded-lg bg-orange-600 px-6 py-3 font-medium text-white transition hover:bg-orange-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                whileHover={{ scale: 1.05 }}
+              >
+                View Projects
+              </motion.button>
+
+              <motion.a
+                href="/contact"
+                className="rounded-lg border border-orange-500 px-6 py-3 font-medium text-orange-700 transition hover:bg-orange-600 hover:text-white dark:border-blue-500 dark:text-blue-300 dark:hover:bg-blue-500 dark:hover:text-white"
+                whileHover={{ scale: 1.05 }}
+              >
+                Contact Me
+              </motion.a>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
