@@ -27,7 +27,7 @@ export default function BootScreen() {
   }, []);
 
   return (
-    <div className="flex flex-col items-start justify-center h-screen px-6 bg-[#0B0C10] font-mono text-blue-400 text-lg">
+    <div className="fixed inset-0 z-[60] flex flex-col items-start justify-center bg-[#0B0C10] px-6 font-mono text-lg text-blue-400">
       {displayedLines.map((line, index) => (
         <motion.p
           key={index}

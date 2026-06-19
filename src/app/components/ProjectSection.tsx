@@ -5,192 +5,160 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { useTheme } from "next-themes";
+import { projects, type ProjectItem } from "../../data/projects";
 
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  video: string;
-  github: string;
-  website: string;
-  techs: string[];
+interface ProjectsSectionProps {
+  showHeading?: boolean;
+  className?: string;
 }
 
-const projects: Project[] = [
-  {
-    title: "StockVision",
-    description:
-      "A personal deep learning experiment exploring whether technical indicators can predict short-term stock price direction (not financial advice) purely a data science project.\n\nThe pipeline starts in Jupyter notebooks where two models are trained per ticker: a Bidirectional LSTM that learns temporal price patterns from 60-day sequences across 22 engineered features (RSI, MACD, Bollinger Bands, momentum, volatility), and an XGBoost classifier that takes those LSTM predictions as an additional feature alongside the raw technicals to generate a directional signal. A Confidence Scorer then combines LSTM magnitude, XGBoost probability, and model agreement to filter low-confidence trades.\n\nThe backend is a FastAPI service deployed on Railway that loads the trained models on startup, runs on-demand backtests with full LSTM inference, and caches results in a Supabase PostgreSQL database. A GitHub Actions cron job runs daily_predict.py every weekday at 22:00 UTC to refresh predictions for all tickers. The frontend is a Next.js dashboard deployed on Vercel, visualizing live signals, price predictions, and historical equity curves comparing Buy & Hold vs XGBoost vs Scorer strategies.",
-    image: "/Stock_Vision.png",
-    video: "/Stock_Vision_Preview.mp4",
-    github: "https://github.com/Jamin-Sulic/StockVision",
-    website: "https://stockvision-alpha.vercel.app",
-    techs: ["Python", "TensorFlow", "XGBoost", "FastAPI", "Next.js", "Supabase"],
-  },
-  {
-    title: "Liar's Dice Online",
-    description:
-      "A real-time multiplayer bluffing game where players can create lobbies, chat via integrated Voice API, and track their wins and statistics on personal profiles. Dice are rolled, players raise bets on total counts, or call out a bluff to expose a lie. Built using React for the frontend and Spring Boot for the backend, with WebSockets for real-time updates.",
-    image: "/Liars_Dice.png",
-    video: "/Liars_Dice_Preview.mp4",
-    github: "https://github.com/sopra-fs24-16-dudo",
-    website: "https://github.com/sopra-fs24-16-dudo",
-    techs: ["React", "Spring Boot", "WebSocket", "API"],
-  },
-];
-
-export default function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+export default function ProjectsSection({ showHeading = true, className = "" }: ProjectsSectionProps) {
+  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const { resolvedTheme } = useTheme();
 
   return (
-    <section id="projects" className="max-w-6xl mx-auto py-24 px-6">
-      <h2 className="text-3xl font-bold text-center mb-16 text-gray-900 dark:text-gray-100">
-        Projects
-      </h2>
+    <section id="projects" className={`mx-auto max-w-6xl px-6 py-24 ${className}`}>
+      {showHeading ? (
+        <h2 className="mb-16 text-center text-3xl font-bold text-gray-900 dark:text-gray-100">
+          Projects
+        </h2>
+      ) : null}
 
-      {/* Project Grid */}
-      <div className="grid md:grid-cols-2 gap-10">
-        {projects.map((project, index) => {
+      <div className="grid gap-10 md:grid-cols-2">
+        {projects.map((project) => {
           const imageSrc =
             resolvedTheme === "light"
-              ? project.image.replace(/(\.[\w]+)$/, "_light$1")
+              ? project.imageLight ?? project.image.replace(/(\.[\w]+)$/, "_light$1")
               : project.image;
 
-          const isDark = resolvedTheme === "dark";
-
           return (
-            <motion.div
-              key={index}
-              className="relative group overflow-hidden rounded-2xl border-2 border-gray-200 dark:border-gray-700 hover:border-orange-500 dark:hover:border-blue-500 transition-all duration-300 cursor-pointer"
+            <motion.button
+              key={project.title}
+              type="button"
+              className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 text-left transition-all duration-300 hover:border-orange-500 dark:border-gray-700 dark:hover:border-blue-500"
               onClick={() => setSelectedProject(project)}
+              whileHover={{ y: -4 }}
             >
-              {/* Screenshot */}
               <Image
                 src={imageSrc}
                 alt={project.title}
                 width={800}
                 height={600}
-                className="object-cover w-full h-64 bg-gray-100 dark:bg-black transition-opacity duration-500 group-hover:opacity-0"
+                className="h-64 w-full object-cover bg-gray-100 transition-opacity duration-500 group-hover:opacity-0 dark:bg-black"
               />
 
-              {/* Video Preview */}
-              <motion.video
-                src={project.video}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 object-cover w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              />
+              {project.video ? (
+                <motion.video
+                  src={project.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                />
+              ) : null}
 
-              {/* Overlay */}
-              <div
-                className={`absolute bottom-0 left-0 right-0 p-4 transition-colors duration-300 ${
-                  isDark
-                    ? "bg-gradient-to-t from-black/80 to-transparent text-white"
-                    : "bg-transparent text-gray-900"
-                }`}
-              >
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/75 to-transparent p-4 text-white dark:from-black/80">
                 <h3 className="text-lg font-semibold">{project.title}</h3>
               </div>
-            </motion.div>
+            </motion.button>
           );
         })}
       </div>
 
-      {/* Modal */}
       <AnimatePresence>
-        {selectedProject && (
+        {selectedProject ? (
           <motion.div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
           >
             <motion.div
-              className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl max-w-3xl w-full overflow-hidden relative"
-              initial={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-900"
+              initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={(e) => e.stopPropagation()}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={(event) => event.stopPropagation()}
             >
-              {/* Close */}
               <button
                 onClick={() => setSelectedProject(null)}
-                className="absolute top-4 right-4 text-gray-600 dark:text-gray-300 hover:text-red-500"
+                className="absolute right-4 top-4 z-10 rounded-full bg-white/90 p-2 text-gray-700 shadow-sm transition hover:text-red-500 dark:bg-black/60 dark:text-gray-200"
               >
-                <X className="w-6 h-6" />
+                <X className="h-5 w-5" />
               </button>
 
-              {/* Modal Content */}
-              <div className="grid md:grid-cols-2 gap-6 p-6">
-                <video
-                  src={selectedProject.video}
-                  controls
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="rounded-lg w-full h-full object-cover"
-                />
+              <div className="grid gap-6 p-6 md:grid-cols-2">
+                {selectedProject.video ? (
+                  <video
+                    src={selectedProject.video}
+                    controls
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="h-full w-full rounded-xl object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    width={800}
+                    height={600}
+                    className="h-full w-full rounded-xl object-cover"
+                  />
+                )}
 
-                <div>
-                  {/* Title */}
-                  <h3 className="text-2xl font-semibold mb-2 text-orange-600 dark:text-blue-400">
+                <div className="flex flex-col">
+                  <h3 className="text-2xl font-semibold text-orange-600 dark:text-blue-400">
                     {selectedProject.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="text-gray-700 dark:text-gray-300 mb-4 max-h-48 overflow-y-auto pr-1 whitespace-pre-line">
+                  <p className="mt-3 max-h-52 overflow-y-auto whitespace-pre-line text-sm leading-7 text-gray-700 dark:text-gray-300">
                     {selectedProject.description}
                   </p>
 
-                  {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {selectedProject.techs.map((tech, i) => (
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {selectedProject.techs.map((tech, index) => (
                       <motion.span
-                        key={i}
-                        className="px-3 py-1 text-sm rounded-full border transition-colors duration-300
-                          bg-orange-100 text-orange-700 border-orange-300
-                          dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-700"
-                        initial={{ opacity: 0, y: 5 }}
+                        key={tech}
+                        className="rounded-full border border-orange-300 bg-orange-100 px-3 py-1 text-sm text-orange-700 dark:border-blue-700 dark:bg-blue-900/40 dark:text-blue-300"
+                        initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.1 }}
+                        transition={{ delay: index * 0.06 }}
                       >
                         {tech}
                       </motion.span>
                     ))}
                   </div>
 
-                  {/* Buttons */}
-                  <div className="flex gap-4">
+                  <div className="mt-6 flex flex-wrap gap-3">
                     <a
                       href={selectedProject.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-lg text-white transition-colors duration-300 bg-orange-700 hover:bg-orange-600 dark:bg-blue-900 dark:hover:bg-blue-700"
+                      className="rounded-full bg-orange-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-orange-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                     >
                       GitHub
                     </a>
-                    {selectedProject.website && (
+                    {selectedProject.website ? (
                       <a
                         href={selectedProject.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-4 py-2 rounded-lg text-white transition-colors duration-300 bg-orange-600 hover:bg-orange-500 dark:bg-blue-600 dark:hover:bg-blue-500"
+                        className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-800 transition hover:border-orange-500 hover:text-orange-600 dark:border-white/10 dark:text-gray-100 dark:hover:border-blue-500 dark:hover:text-blue-300"
                       >
                         Live Demo
                       </a>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               </div>
             </motion.div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </section>
   );

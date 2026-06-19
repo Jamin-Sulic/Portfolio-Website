@@ -32,25 +32,24 @@ export default function AboutGoogle() {
           </p>
         </div>
 
-        <motion.div
-          whileHover={{
-            scale: 1.02,
-            boxShadow: "0 0 25px rgba(59,130,246,0.2)",
-          }}
-          transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          className="p-4 sm:p-6 rounded-2xl"
-        >
-          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
-            Jamin Sulic Business Informatics Student @ UZH
-          </h3>
+          <motion.div
+            whileHover={{
+              scale: 1.02,
+              boxShadow: "0 0 25px rgba(59,130,246,0.2)",
+            }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            className="p-4 sm:p-6 rounded-2xl"
+          >
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
+            Jamin Sulic
+            </h3>
 
           <p className="text-gray-700 dark:text-gray-300 mb-2">
-            I’m passionate about automation, efficient systems, and creating seamless digital experiences.  
-            My goal is to make everyday processes smoother, one smart solution at a time.
+            Business Informatics Graduate of UZH working as an Application Engineer in the Graduate Programme at Julius Baer.
           </p>
 
           <p className="text-gray-700 dark:text-gray-300">
-            Outside of tech: volleyball, gym and a perfectly brewed espresso ☕.
+            Interested in technology, education, finance, travel and outdoor activities. Hiking and sport are part of my routine outside of work.
           </p>
 
           <motion.p
@@ -59,7 +58,7 @@ export default function AboutGoogle() {
             transition={{ delay: 1 }}
             className="mt-5 text-sm text-orange-600 dark:text-blue-400 font-medium"
           >
-            #automation #UX #designthinking #coffee
+            #technology #education #finance #travel #hiking
           </motion.p>
         </motion.div>
       </motion.div>

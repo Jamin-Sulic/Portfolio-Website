@@ -2,24 +2,21 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+
+const links = [
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/projects" },
+  { label: "Tutoring", href: "/nachhilfe" },
+  { label: "Travel", href: "/travel" },
+  { label: "Contact", href: "/contact" },
+];
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  // Smooth Scroll
-  const scrollToSection = (id: string) => {
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-    setIsMenuOpen(false);
   };
 
   return (
@@ -42,30 +39,25 @@ export default function Navbar() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="fixed top-0 left-0 w-[220px] h-full bg-gray-300 dark:bg-[#333] text-gray-900 dark:text-white shadow-xl flex flex-col items-center pt-16 z-40"
+            className="fixed top-5 left-0 z-40 flex h-full w-[250px] flex-col items-start border-r border-gray-200 bg-white/95 px-6 pt-16 text-gray-900 shadow-xl backdrop-blur dark:border-white/10 dark:bg-[#111]/95 dark:text-white"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ type: "spring", stiffness: 150, damping: 25 }}
           >
-            <button onClick={() => scrollToSection("#home")} className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors">
-              Home
-            </button>
-            <button onClick={() => scrollToSection("#experience")} className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors">
-              Experience
-            </button>
-            <button onClick={() => scrollToSection("#techstack")} className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors">
-              Tech Stack
-            </button>
-            <button onClick={() => scrollToSection("#projects")} className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors">
-              Projects
-            </button>
-            <button onClick={() => scrollToSection("#about")} className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors">
-              About Me
-            </button>
-            <button onClick={() => window.dispatchEvent(new Event("openContactPopup"))} className="py-4 text-lg font-semibold hover:text-blue-500 transition-colors">
-              Contact
-            </button>
+            <div className="mb-5 text-xs font-semibold uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">
+              jamin.ch
+            </div>
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="w-full rounded-2xl px-3 py-4 text-lg font-semibold transition hover:bg-gray-100 hover:text-orange-600 dark:hover:bg-white/5 dark:hover:text-blue-400"
+              >
+                {link.label}
+              </Link>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
